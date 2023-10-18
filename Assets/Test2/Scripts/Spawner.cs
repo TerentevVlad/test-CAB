@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Test2.Scripts
@@ -7,24 +9,20 @@ namespace Test2.Scripts
     {
         [SerializeField] private ObjectView _objectViewPrefab;
 
-
+        private Pool _pool;
         private void Awake()
         {
-            for (int i = 0; i < 10; i++)
-            {
-                var objectView = Instantiate(_objectViewPrefab);
-                objectView.RandomSkin();
-            }
+            _pool = new Pool(_objectViewPrefab, 2000, transform);
         }
 
 
-        public List<ObjectView> Spawn(Bounds bounds, Transform parent)
+        public List<ObjectView> Spawn(Bounds bounds)
         {
             var size = 1000;
-            List<ObjectView> objectViews = new List<ObjectView>(size);
+            List<ObjectView> objectViews = _pool.Create(size);
             for (int i = 0; i < size; i++)
             {
-                var objectView = Instantiate(_objectViewPrefab);
+                var objectView = objectViews[i];
                 objectView.RandomSkin();
                 objectView.RandomPosition(bounds);
                 objectViews.Add(objectView);
@@ -35,10 +33,7 @@ namespace Test2.Scripts
 
         public void Release(List<ObjectView> objectViews)
         {
-            foreach (var objectView in objectViews)
-            {
-                Destroy(objectView.gameObject);
-            }
+            _pool.Release(objectViews);
         }
     }
 }

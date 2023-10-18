@@ -24,12 +24,11 @@ namespace Test2.Scripts.ChunkSystem
         private void OnEnterInChunk(ChunkChanger changer)
         {
             OnEnter?.Invoke(this);
-            _objectViews = _spawner.Spawn(_boxCollider.bounds, transform);
+            _objectViews = _spawner.Spawn(_boxCollider.bounds);
         } 
         
         private void OnExitInChunk(ChunkChanger changer)
         {
-            Debug.LogError("OnExit: " + gameObject);
             if (_objectViews != null)
             {
                 _spawner.Release(_objectViews);

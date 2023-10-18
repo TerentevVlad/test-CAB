@@ -12,4 +12,6 @@ namespace Test2.Scripts
             meshRendererMaterial.color = color;
         }
     }
+    
+  
 }

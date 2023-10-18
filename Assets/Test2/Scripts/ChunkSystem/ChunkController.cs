@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Test2.Scripts.ChunkSystem
 {
+   
     public class ChunkController : MonoBehaviour
     {
         [SerializeField] private List<ChunkView> _chunks;
