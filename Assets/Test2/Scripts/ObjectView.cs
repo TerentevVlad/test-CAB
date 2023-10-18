@@ -11,6 +11,16 @@ namespace Test2.Scripts
             var meshRendererMaterial = _meshRenderer.material;
             meshRendererMaterial.color = color;
         }
+
+        public void Activate()
+        {
+            
+        }
+
+        public void Deactivate()
+        {
+            transform.position = Vector3.up * 1000;
+        }
     }
     
   

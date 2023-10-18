@@ -23,19 +23,20 @@ namespace Test2.Scripts.ChunkSystem
 
         private void OnEnterInChunk(ChunkChanger changer)
         {
-            OnEnter?.Invoke(this);
             _objectViews = _spawner.Spawn(_boxCollider.bounds, transform);
+            OnEnter?.Invoke(this);
+            
         } 
         
         private void OnExitInChunk(ChunkChanger changer)
         {
-            
-            OnExit?.Invoke(this);
             if (_objectViews != null)
             {
                 _spawner.Release(_objectViews);
             }
             _objectViews = null;
+            OnExit?.Invoke(this);
+           
         }
 
         private void OnDestroy()

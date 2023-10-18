@@ -19,6 +19,7 @@ namespace Test2.Scripts
 
             Instantiate(startSize);
         }
+        
         public List<ObjectView> Create(int num, Action<ObjectView> action)
         {
             if (num >= _freeInstance.Count)
@@ -31,7 +32,7 @@ namespace Test2.Scripts
             _freeInstance.RemoveRange(0, num);
             foreach (var objectView in objectViews)
             {
-                objectView.gameObject.SetActive(true);
+                objectView.Activate();
                 action?.Invoke(objectView);
             }
             
@@ -44,8 +45,7 @@ namespace Test2.Scripts
         {
             foreach (var objectView in objectViews)
             {
-                objectView.gameObject.SetActive(false);
-                objectView.transform.SetParent(_container);
+                objectView.Deactivate();
             }
             _freeInstance.AddRange(objectViews);
         }
@@ -55,7 +55,7 @@ namespace Test2.Scripts
             for (int i = 0; i < num; i++)
             {
                 var instance = Object.Instantiate(_prefab, _container);
-                instance.gameObject.SetActive(false);
+                instance.Activate();
                 _freeInstance.Add(instance);
             }
         }

@@ -23,7 +23,6 @@ namespace Test2.Scripts
             {
                 view.RandomSkin();
                 view.RandomPosition(bounds);
-                view.transform.SetParent(parent);
             });
             
             return objectViews;
