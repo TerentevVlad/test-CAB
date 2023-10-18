@@ -13,7 +13,7 @@ namespace Test2.Scripts
         private Pool _pool;
         private void Awake()
         {
-            _pool = new Pool(_objectViewPrefab, 2000, transform);
+            _pool = new Pool(_objectViewPrefab, 4000, transform);
         }
 
 
