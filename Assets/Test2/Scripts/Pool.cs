@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Test2.Scripts
 {
@@ -17,7 +19,7 @@ namespace Test2.Scripts
 
             Instantiate(startSize);
         }
-        public List<ObjectView> Create(int num)
+        public List<ObjectView> Create(int num, Action<ObjectView> action)
         {
             if (num >= _freeInstance.Count)
             {
@@ -26,12 +28,14 @@ namespace Test2.Scripts
             }
 
             var objectViews = _freeInstance.GetRange(0, num);
+            _freeInstance.RemoveRange(0, num);
             foreach (var objectView in objectViews)
             {
                 objectView.gameObject.SetActive(true);
+                action?.Invoke(objectView);
             }
             
-            _freeInstance.RemoveRange(0, num);
+          
 
             return objectViews;
         }
@@ -41,7 +45,7 @@ namespace Test2.Scripts
             foreach (var objectView in objectViews)
             {
                 objectView.gameObject.SetActive(false);
-                //objectView.transform.SetParent(_container);
+                objectView.transform.SetParent(_container);
             }
             _freeInstance.AddRange(objectViews);
         }
@@ -51,7 +55,7 @@ namespace Test2.Scripts
             for (int i = 0; i < num; i++)
             {
                 var instance = Object.Instantiate(_prefab, _container);
-                //instance.gameObject.SetActive(false);
+                instance.gameObject.SetActive(false);
                 _freeInstance.Add(instance);
             }
         }

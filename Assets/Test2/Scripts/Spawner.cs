@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Test2.Scripts
 {
@@ -16,24 +17,26 @@ namespace Test2.Scripts
         }
 
 
-        public List<ObjectView> Spawn(Bounds bounds)
+        public List<ObjectView> Spawn(Bounds bounds, Transform parent)
         {
-            var size = 1000;
-            List<ObjectView> objectViews = _pool.Create(size);
-            for (int i = 0; i < size; i++)
+            List<ObjectView> objectViews = _pool.Create(1000, (view) =>
             {
-                var objectView = objectViews[i];
-                objectView.RandomSkin();
-                objectView.RandomPosition(bounds);
-                objectViews.Add(objectView);
-            }
-
+                view.RandomSkin();
+                view.RandomPosition(bounds);
+                view.transform.SetParent(parent);
+            });
+            
             return objectViews;
         }
 
         public void Release(List<ObjectView> objectViews)
         {
             _pool.Release(objectViews);
+
+            // foreach (var objectView in objectViews)
+            // {
+            //     Object.Destroy(objectView.gameObject);
+            // }
         }
     }
 }
